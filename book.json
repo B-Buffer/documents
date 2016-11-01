@@ -1,0 +1,8 @@
+{
+    "variables" : {
+        "b-buffer-name" :  "B-Buffer",
+        "copyrightYear" :  "2016",
+        "copyrightHolder" :  "Kylin Soong"
+    },
+    "plugins": ["collapsible-menu"]
+}

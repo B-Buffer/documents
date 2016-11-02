@@ -1,0 +1,35 @@
+
+= TupleBatch
+
+image:img/tuplebatch.png[ADT - TupleBatch]
+
+* A `TupleBatch` is a matrix data set,  it equivalent to a set of rows in RDBMS Table.
+* A `TupleBatch` represents a set of indexed link:tuple.adoc[tuples] and is a segment of link:tuplesource.adoc[tuple source].
+* A `TupleBatch` has 2 key flag represents it's position of the whole link:tuplesource.adoc[tuple source]:
+** rowOffset - is the first row contained in this batch, if it equals "1" then it is the first row of the tuple source, otherwise this is a batch of intermediate tuples.
+** terminationFlag - whether the batch is the last batch of the whole link:tuplesource.adoc[tuple source],  if it equals "1" then it means the batch is the last batch.  
+
+== Implements
+
+[source,java]
+----
+List<List<?>> tuples
+----
+
+== Examples
+
+[source,java]
+----
+List rows = new ArrayList(3);
+List row1 = new ArrayList(3);
+List row2 = new ArrayList(3);
+row1.add(101);
+row1.add("John");
+row1.add(38);
+row2.add(102);
+row2.add("Kylin");
+row2.add(30);
+rows.add(row1);
+rows.add(row2);
+TupleBatch tuples = new TupleBatch(0, rows);
+----

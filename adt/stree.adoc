@@ -1,0 +1,4 @@
+
+= STree
+
+* A `STree` is a self balancing search tree, has similar performance similar to a B+/-Tree.

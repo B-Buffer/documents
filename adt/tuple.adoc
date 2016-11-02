@@ -1,0 +1,24 @@
+
+= Tuple
+
+image:img/tuple.png[ADT - Tuple]
+
+* A `Tuple` is a ordered, no type constrainted list of elements, it equivalent to a row in RDBMS Table.
+* A `Tuple` has concepts length, element, element data type, etc.
+
+== Implements
+
+[source,java]
+----
+List<?> tuple
+----
+
+== Examples
+
+[source,java]
+----
+List tuple = new ArrayList();
+tuple.add(new Integer(100));
+tuple.add(new String("tuple"));
+tuple.add(null);
+----

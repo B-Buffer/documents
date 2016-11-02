@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Abstract Data Type(ADT) | What’s B-Buffer</title>
+        <title>TupleBatch | What’s B-Buffer</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../adt/tuple.html" />
+    <link rel="next" href="../adt/tuplesource.html" />
     
     
-    <link rel="prev" href="../index.html" />
+    <link rel="prev" href="../adt/tuple.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="1"
-        data-chapter-title="Abstract Data Type(ADT)"
-        data-filepath="adt/adt.adoc"
+        data-level="1.2"
+        data-chapter-title="TupleBatch"
+        data-filepath="adt/tuplebatch.adoc"
         data-basepath=".."
         data-revision="Wed Nov 02 2016 18:09:26 GMT+0800 (CST)"
         data-innerlanguage="">
@@ -82,7 +82,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1" data-path="adt/adt.html">
+        <li class="chapter " data-level="1" data-path="adt/adt.html">
             
                 
                     <a href="../adt/adt.html">
@@ -113,7 +113,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="adt/tuplebatch.html">
+        <li class="chapter active" data-level="1.2" data-path="adt/tuplebatch.html">
             
                 
                     <a href="../adt/tuplebatch.html">
@@ -196,8 +196,68 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="abstract-data-typeadt">Abstract Data Type(ADT)</h1>
-
+                        <h1 id="tuplebatch">TupleBatch</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><img src="img/tuplebatch.png" alt="ADT - TupleBatch"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A <code>TupleBatch</code> is a matrix data set,  it equivalent to a set of rows in RDBMS Table.</p>
+</li>
+<li>
+<p>A <code>TupleBatch</code> represents a set of indexed <a href="tuple.html">tuples</a> and is a segment of <a href="tuplesource.html">tuple source</a>.</p>
+</li>
+<li>
+<p>A <code>TupleBatch</code> has 2 key flag represents it&#x2019;s position of the whole <a href="tuplesource.html">tuple source</a>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>rowOffset - is the first row contained in this batch, if it equals &quot;1&quot; then it is the first row of the tuple source, otherwise this is a batch of intermediate tuples.</p>
+</li>
+<li>
+<p>terminationFlag - whether the batch is the last batch of the whole <a href="tuplesource.html">tuple source</a>,  if it equals &quot;1&quot; then it means the batch is the last batch.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_implements">Implements</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">List&lt;List&lt;?&gt;&gt; tuples</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_examples">Examples</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">List rows = <span class="hljs-keyword">new</span> ArrayList(<span class="hljs-number">3</span>);
+List row1 = <span class="hljs-keyword">new</span> ArrayList(<span class="hljs-number">3</span>);
+List row2 = <span class="hljs-keyword">new</span> ArrayList(<span class="hljs-number">3</span>);
+row1.add(<span class="hljs-number">101</span>);
+row1.add(<span class="hljs-string">&quot;John&quot;</span>);
+row1.add(<span class="hljs-number">38</span>);
+row2.add(<span class="hljs-number">102</span>);
+row2.add(<span class="hljs-string">&quot;Kylin&quot;</span>);
+row2.add(<span class="hljs-number">30</span>);
+rows.add(row1);
+rows.add(row2);
+TupleBatch tuples = <span class="hljs-keyword">new</span> TupleBatch(<span class="hljs-number">0</span>, rows);</code></pre>
+</div>
+</div>
+</div>
+</div>
                     
                     </section>
                 
@@ -207,10 +267,10 @@
         </div>
 
         
-        <a href="../index.html" class="navigation navigation-prev " aria-label="Previous page: Introduction"><i class="fa fa-angle-left"></i></a>
+        <a href="../adt/tuple.html" class="navigation navigation-prev " aria-label="Previous page: Tuple"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../adt/tuple.html" class="navigation navigation-next " aria-label="Next page: Tuple"><i class="fa fa-angle-right"></i></a>
+        <a href="../adt/tuplesource.html" class="navigation navigation-next " aria-label="Next page: TupleSource"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

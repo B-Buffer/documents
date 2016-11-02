@@ -1,0 +1,13 @@
+
+= BufferManager
+
+== BufferManager Starting
+
+There are 4 steps in BufferManager Starting:
+
+1. Initialize buffer attribute
+2. Start buffer cleaner
+3. Further initializing
+4. Initialize buffer cache and storage manager
+
+

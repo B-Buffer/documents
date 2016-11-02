@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Abstract Data Type(ADT) | What’s B-Buffer</title>
+        <title>Tuple | What’s B-Buffer</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../adt/tuple.html" />
+    <link rel="next" href="../adt/tuplebatch.html" />
     
     
-    <link rel="prev" href="../index.html" />
+    <link rel="prev" href="../adt/adt.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="1"
-        data-chapter-title="Abstract Data Type(ADT)"
-        data-filepath="adt/adt.adoc"
+        data-level="1.1"
+        data-chapter-title="Tuple"
+        data-filepath="adt/tuple.adoc"
         data-basepath=".."
         data-revision="Wed Nov 02 2016 18:09:26 GMT+0800 (CST)"
         data-innerlanguage="">
@@ -82,7 +82,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1" data-path="adt/adt.html">
+        <li class="chapter " data-level="1" data-path="adt/adt.html">
             
                 
                     <a href="../adt/adt.html">
@@ -98,7 +98,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.1" data-path="adt/tuple.html">
+        <li class="chapter active" data-level="1.1" data-path="adt/tuple.html">
             
                 
                     <a href="../adt/tuple.html">
@@ -196,8 +196,47 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="abstract-data-typeadt">Abstract Data Type(ADT)</h1>
-
+                        <h1 id="tuple">Tuple</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><img src="img/tuple.png" alt="ADT - Tuple"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A <code>Tuple</code> is a ordered, no type constrainted list of elements, it equivalent to a row in RDBMS Table.</p>
+</li>
+<li>
+<p>A <code>Tuple</code> has concepts length, element, element data type, etc.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_implements">Implements</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">List&lt;?&gt; tuple</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_examples">Examples</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">List tuple = <span class="hljs-keyword">new</span> ArrayList();
+tuple.add(<span class="hljs-keyword">new</span> Integer(<span class="hljs-number">100</span>));
+tuple.add(<span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;tuple&quot;</span>));
+tuple.add(<span class="hljs-keyword">null</span>);</code></pre>
+</div>
+</div>
+</div>
+</div>
                     
                     </section>
                 
@@ -207,10 +246,10 @@
         </div>
 
         
-        <a href="../index.html" class="navigation navigation-prev " aria-label="Previous page: Introduction"><i class="fa fa-angle-left"></i></a>
+        <a href="../adt/adt.html" class="navigation navigation-prev " aria-label="Previous page: Abstract Data Type(ADT)"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../adt/tuple.html" class="navigation navigation-next " aria-label="Next page: Tuple"><i class="fa fa-angle-right"></i></a>
+        <a href="../adt/tuplebatch.html" class="navigation navigation-next " aria-label="Next page: TupleBatch"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

@@ -5,9 +5,98 @@
 
 There are 4 steps in BufferManager Starting:
 
-1. Initialize buffer attribute
+1. Initialize buffer properties
 2. Start buffer cleaner
 3. Further initializing
 4. Initialize buffer cache and storage manager
+
+=== BufferManager Properties
+
+|===
+|Name |Default |Description
+
+|processorBatchSize
+|256
+|Specifies the target row count of a link:../adt/tuplebatch.adoc[TupleBatch]
+
+|maxProcessingBytes
+|1 << 21
+|
+
+|maxReserveBytes
+|1 << 28
+|
+
+|reserveBatchBytes
+|0
+|
+
+|overheadBytes
+|0
+|
+
+|maxActivePlans
+|20
+|
+
+|useWeakReferences
+|true
+|
+
+|inlineLobs
+|true
+|
+
+|targetBytesPerRow
+|2018
+|
+
+|maxSoftReferences
+|0
+|
+
+|nominalProcessingMemoryMax
+|1 << 21
+|
+
+|activeBatchBytes
+|0
+|
+
+|readAttempts
+|0
+|
+
+|tsId
+|0
+|
+
+|batchAdded
+|0
+|
+
+|readCount
+|0
+|
+
+|writeCount
+|0
+|
+
+|referenceHit
+|0
+|
+
+|cleaning
+|false
+|
+
+|removed
+|0
+|
+
+|===
+
+=== Start buffer cleaner
 
 

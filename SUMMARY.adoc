@@ -5,3 +5,4 @@
 .. link:adt/tuplebatch.adoc[TupleBatch]
 .. link:adt/tuplesource.adoc[TupleSource]
 .. link:adt/stree.adoc[STree]
+. link:buffer/buffermanager.adoc[BufferManager]

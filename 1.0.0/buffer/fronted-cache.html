@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Abstract Data Type(ADT) | What’s B-Buffer</title>
+        <title>Fronted Cache | What’s B-Buffer</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,8 @@
         
     
     
-    <link rel="next" href="../adt/tuple.html" />
     
-    
-    <link rel="prev" href="../index.html" />
+    <link rel="prev" href="../buffer/buffermanager.html" />
     
 
         
@@ -49,9 +47,9 @@
         
         
     <div class="book"
-        data-level="1"
-        data-chapter-title="Abstract Data Type(ADT)"
-        data-filepath="adt/adt.adoc"
+        data-level="2.1"
+        data-chapter-title="Fronted Cache"
+        data-filepath="buffer/fronted-cache.adoc"
         data-basepath=".."
         data-revision="Mon Feb 06 2017 16:06:38 GMT+0800 (CST)"
         data-innerlanguage="">
@@ -82,7 +80,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1" data-path="adt/adt.html">
+        <li class="chapter " data-level="1" data-path="adt/adt.html">
             
                 
                     <a href="../adt/adt.html">
@@ -179,7 +177,7 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="2.1" data-path="buffer/fronted-cache.html">
+        <li class="chapter active" data-level="2.1" data-path="buffer/fronted-cache.html">
             
                 
                     <a href="../buffer/fronted-cache.html">
@@ -232,8 +230,119 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="abstract-data-typeadt">Abstract Data Type(ADT)</h1>
-
+                        <h1 id="fronted-cache">Fronted Cache</h1>
+<div class="sect1">
+<h2 id="_properties">Properties</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 22%;">
+<col style="width: 22%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxStorageObjectSize</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8388608</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">memoryBufferSpace</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">67108864</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">direct</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxMemoryBlocks</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">readAttempts</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">blocks</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">defragRunning</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">freedCounter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">compactBufferFiles</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><div><div class="ulist">
+<ul>
+<li>
+<p>can specify via system properties <code>org.teiid.compactBufferFiles</code>, eg: <code>-Dorg.teiid.compactBufferFiles=true</code></p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">truncateInterval</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">lastFullRun</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cleanerRunning</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cleaningThreshold</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">criticalCleaningThreshold</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">storageWrites</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">storageReads</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">minDefrag</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">67108864</p></td>
+<td class="tableblock halign-left valign-top"><div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
                     
                     </section>
                 
@@ -243,10 +352,8 @@
         </div>
 
         
-        <a href="../index.html" class="navigation navigation-prev " aria-label="Previous page: Introduction"><i class="fa fa-angle-left"></i></a>
+        <a href="../buffer/buffermanager.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: BufferManager"><i class="fa fa-angle-left"></i></a>
         
-        
-        <a href="../adt/tuple.html" class="navigation navigation-next " aria-label="Next page: Tuple"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

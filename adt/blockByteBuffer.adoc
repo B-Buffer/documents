@@ -1,0 +1,10 @@
+ 
+= BlockByteBuffer
+
+
+* A `BlockByteBuffer` provides buffer slices or blocks off of a central set of buffers. 
+* 4 parameters are used to create a `BlockByteBuffer`
+** `segmentAddressBits` - each buffer segment will be 1 << segmentAddressBits (max of 30)
+** `blockCount`
+** `blockAddressBits`
+** `direct`

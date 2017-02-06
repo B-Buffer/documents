@@ -6,3 +6,4 @@
 .. link:adt/tuplesource.adoc[TupleSource]
 .. link:adt/stree.adoc[STree]
 . link:buffer/buffermanager.adoc[BufferManager]
+.. link:buffer/fronted-cache.adoc[Fronted Cache]

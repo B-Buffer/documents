@@ -12,6 +12,7 @@ There are 4 steps in BufferManager Starting:
 
 === BufferManager Properties
 
+[cols="2,2,5a"]
 |===
 |Name |Default |Description
 
@@ -29,7 +30,11 @@ There are 4 steps in BufferManager Starting:
 
 |reserveBatchBytes
 |0
-|
+|* Set equivalent to `maxReserveBytes` in  BufferManager initializing
+
+|maxProcessingBytesOrig
+|null
+|* Set equivalent to `maxProcessingBytes` in  BufferManager initializing
 
 |overheadBytes
 |0
@@ -98,5 +103,13 @@ There are 4 steps in BufferManager Starting:
 |===
 
 === Start buffer cleaner
+
+//TODO
+
+=== Further initializing
+
+The further initializing implemented by BufferManagerImpl's initialize() method be invoked, the following properties or attributes be initializd as a order:
+
+image:img/buffermanager-initialize.png[BufferManager initializing]
 
 

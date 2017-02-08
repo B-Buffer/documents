@@ -13,3 +13,17 @@ image:img/tuplesource-impl.png[ADT - TupleSource Implements]
 
 == Examples
 
+
+[source,java]
+.*A simple CollectionTupleSource*
+----
+List<List<?>> tuples = new ArrayList<>();
+for(int i = 0 ; i < 10 ; i ++) {
+    tuples.add(Arrays.asList(i, "name-" + i));
+}
+CollectionTupleSource tupleSource = new CollectionTupleSource(tuples.iterator());
+List<?> tuple = null;
+while((tuple = tupleSource.nextTuple()) != null) {
+    System.out.println(tuple);
+}
+----

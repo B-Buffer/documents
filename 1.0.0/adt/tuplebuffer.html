@@ -5,7 +5,7 @@
         
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>TupleBatch | What’s B-Buffer</title>
+        <title>TupleBuffer | What’s B-Buffer</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 2.6.7">
@@ -37,10 +37,10 @@
         
     
     
-    <link rel="next" href="../adt/tuplesource.html" />
+    <link rel="next" href="../adt/stree.html" />
     
     
-    <link rel="prev" href="../adt/tuple.html" />
+    <link rel="prev" href="../adt/tuplesource.html" />
     
 
         
@@ -49,9 +49,9 @@
         
         
     <div class="book"
-        data-level="1.2"
-        data-chapter-title="TupleBatch"
-        data-filepath="adt/tuplebatch.adoc"
+        data-level="1.4"
+        data-chapter-title="TupleBuffer"
+        data-filepath="adt/tuplebuffer.adoc"
         data-basepath=".."
         data-revision="Wed Feb 08 2017 20:12:13 GMT+0800 (CST)"
         data-innerlanguage="">
@@ -113,7 +113,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2" data-path="adt/tuplebatch.html">
+        <li class="chapter " data-level="1.2" data-path="adt/tuplebatch.html">
             
                 
                     <a href="../adt/tuplebatch.html">
@@ -143,7 +143,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="adt/tuplebuffer.html">
+        <li class="chapter active" data-level="1.4" data-path="adt/tuplebuffer.html">
             
                 
                     <a href="../adt/tuplebuffer.html">
@@ -247,64 +247,100 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="tuplebatch">TupleBatch</h1>
+                        <h1 id="tuplebuffer">TupleBuffer</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p><span class="image"><img src="img/tuplebatch.png" alt="ADT - TupleBatch"></span></p>
+<p><span class="image"><img src="img/tuplebuffer.png" alt="ADT - TupleBuffer"></span></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>A <code>TupleBatch</code> is a matrix data set,  it equivalent to a set of rows in RDBMS Table.</p>
+<p>A <code>TupleBuffer</code> is bind with a TupleSource, is a bridge between TupleSource and Buffer, it used to keep all tuples from a TupleSource. At a specific processing time, the <code>TupleBuffer</code> only keep a less than batchSize number of Tuples, the others be kept in Buffer per Batch.</p>
 </li>
 <li>
-<p>A <code>TupleBatch</code> represents a set of indexed <a href="tuple.html">tuples</a> and is a segment of <a href="tuplesource.html">tuple source</a>.</p>
+<p>A <code>TupleBuffer</code> can get the batch containing the given row, the returned batch may be empty or may begin with a row other than the one specified.</p>
 </li>
 <li>
-<p>A <code>TupleBatch</code> has 2 key flag represents it&#x2019;s position of the whole <a href="tuplesource.html">tuple source</a>:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>rowOffset - is the first row contained in this batch, if it equals &quot;1&quot; then it is the first row of the tuple source, otherwise this is a batch of intermediate tuples.</p>
+<p>A <code>TupleBuffer</code> can create a TupleSource, which the tuples can be get iteratively.</p>
 </li>
 <li>
-<p>terminationFlag - whether the batch is the last batch of the whole <a href="tuplesource.html">tuple source</a>,  if it equals &quot;1&quot; then it means the batch is the last batch.</p>
+<p>A <code>TupleBuffer</code> has a BatchManager and a LobManager, the BatchManager used to form tuples to a TupleBatch and add it to Buffer, the LobManager used to pruge the Blob/Clob/Object column to FileStore directly.</p>
 </li>
 </ul>
 </div>
-</li>
-</ul>
-</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. <strong>Key flags of TupleBuffer</strong></caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tupleSourceID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the id of TupleSource</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rowCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hints how many tuples in <code>TupleBuffer</code>, or how many tuples in a TupleSource.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">batchSize</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">the size of a TupleBatch, while the tuple be add to <code>TupleBuffer</code>, once the batchSize of tuples be added, a TupleBatch will be created and added to Buffer.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">isFinal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">if set to true hints all tuples from TupleSource be add to <code>TupleBuffer</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">forwardOnly</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hints the TupleBatch will be removed from <code>TupleBuffer</code> once be get.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">removed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">default is false, only be set to true once all TupleBatch be removed.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_implements">Implements</h2>
+<h2 id="_example">Example</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Below is a exmaple of add tuple to <code>TupleBuffer</code>, get TupleBatch from <code>TupleBuffer</code> and create TupleSource via <code>TupleBuffer</code>:</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">List&lt;List&lt;?&gt;&gt; tuples</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_examples">Examples</h2>
-<div class="sectionbody">
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">List rows = <span class="hljs-keyword">new</span> ArrayList(<span class="hljs-number">3</span>);
-List row1 = <span class="hljs-keyword">new</span> ArrayList(<span class="hljs-number">3</span>);
-List row2 = <span class="hljs-keyword">new</span> ArrayList(<span class="hljs-number">3</span>);
-row1.add(<span class="hljs-number">101</span>);
-row1.add(<span class="hljs-string">&quot;John&quot;</span>);
-row1.add(<span class="hljs-number">38</span>);
-row2.add(<span class="hljs-number">102</span>);
-row2.add(<span class="hljs-string">&quot;Kylin&quot;</span>);
-row2.add(<span class="hljs-number">30</span>);
-rows.add(row1);
-rows.add(row2);
-TupleBatch tuples = <span class="hljs-keyword">new</span> TupleBatch(<span class="hljs-number">0</span>, rows);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">ElementSymbol id = <span class="hljs-keyword">new</span> ElementSymbol(<span class="hljs-string">&quot;id&quot;</span>);
+id.setType(Integer.class);
+ElementSymbol name = <span class="hljs-keyword">new</span> ElementSymbol(<span class="hljs-string">&quot;name&quot;</span>);
+name.setType(String.class);
+List&lt;ElementSymbol&gt; elements = Arrays.asList(id, name);
+
+BufferManager bm = BBuffer.Factory.builder().bufferDir(<span class="hljs-string">&quot;target/buffer&quot;</span>).build();
+TupleBuffer tb = bm.createTupleBuffer(elements, <span class="hljs-string">&quot;Users&quot;</span>, TupleSourceType.PROCESSOR);
+tb.setBatchSize(<span class="hljs-number">4</span>);
+
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span> ; i &lt; <span class="hljs-number">10</span> ; i ++) {
+    tb.addTuple(Arrays.asList(i, <span class="hljs-string">&quot;name-&quot;</span> + i));
+}
+tb.setFinal(<span class="hljs-keyword">true</span>);
+
+TupleBatch batch = tb.getBatch(<span class="hljs-number">6</span>);
+System.out.println(batch);
+
+TupleBufferTupleSource tupleSource = tb.createIndexedTupleSource();
+<span class="hljs-keyword">while</span>(tupleSource.hasNext()) {
+    System.out.println(tupleSource.nextTuple());
+}
+tupleSource.closeSource();</code></pre>
 </div>
 </div>
 </div>
@@ -318,10 +354,10 @@ TupleBatch tuples = <span class="hljs-keyword">new</span> TupleBatch(<span class
         </div>
 
         
-        <a href="../adt/tuple.html" class="navigation navigation-prev " aria-label="Previous page: Tuple"><i class="fa fa-angle-left"></i></a>
+        <a href="../adt/tuplesource.html" class="navigation navigation-prev " aria-label="Previous page: TupleSource"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../adt/tuplesource.html" class="navigation navigation-next " aria-label="Next page: TupleSource"><i class="fa fa-angle-right"></i></a>
+        <a href="../adt/stree.html" class="navigation navigation-next " aria-label="Next page: STree"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>

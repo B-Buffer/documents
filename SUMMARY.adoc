@@ -4,6 +4,7 @@
 .. link:adt/tuple.adoc[Tuple]
 .. link:adt/tuplebatch.adoc[TupleBatch]
 .. link:adt/tuplesource.adoc[TupleSource]
+.. link:adt/tuplebuffer.adoc[TupleBuffer]
 .. link:adt/stree.adoc[STree]
 . link:buffer/buffermanager.adoc[BufferManager]
 .. link:buffer/fronted-cache.adoc[Fronted Cache]

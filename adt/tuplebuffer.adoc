@@ -10,7 +10,7 @@ image:img/tuplebuffer.png[ADT - TupleBuffer]
 
 .*Key flags of TupleBuffer*
 |===
-|Name| Note
+|Name| Discription
 
 |tupleSourceID
 |the id of TupleSource
@@ -37,10 +37,8 @@ Below is a exmaple of add tuple to `TupleBuffer`, get TupleBatch from `TupleBuff
 
 [source,java]
 ----
-ElementSymbol id = new ElementSymbol("id");
-id.setType(Integer.class);
-ElementSymbol name = new ElementSymbol("name");
-name.setType(String.class);
+ElementSymbol id = new ElementSymbol("id", new GroupSymbol("Users"), Integer.class);
+ElementSymbol name = new ElementSymbol("name", new GroupSymbol("Users"), String.class);
 List<ElementSymbol> elements = Arrays.asList(id, name);
         
 BufferManager bm = BBuffer.Factory.builder().bufferDir("target/buffer").build();

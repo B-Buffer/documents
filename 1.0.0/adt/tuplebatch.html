@@ -53,7 +53,7 @@
         data-chapter-title="TupleBatch"
         data-filepath="adt/tuplebatch.adoc"
         data-basepath=".."
-        data-revision="Wed Feb 08 2017 20:12:13 GMT+0800 (CST)"
+        data-revision="Sun Feb 12 2017 22:13:40 GMT+0800 (CST)"
         data-innerlanguage="">
     
 
@@ -292,19 +292,13 @@
 <h2 id="_examples">Examples</h2>
 <div class="sectionbody">
 <div class="listingblock">
+<div class="title"><strong>TupleBatch; beginning row=9, number of rows=2, lastBatch=1</strong></div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">List rows = <span class="hljs-keyword">new</span> ArrayList(<span class="hljs-number">3</span>);
-List row1 = <span class="hljs-keyword">new</span> ArrayList(<span class="hljs-number">3</span>);
-List row2 = <span class="hljs-keyword">new</span> ArrayList(<span class="hljs-number">3</span>);
-row1.add(<span class="hljs-number">101</span>);
-row1.add(<span class="hljs-string">&quot;John&quot;</span>);
-row1.add(<span class="hljs-number">38</span>);
-row2.add(<span class="hljs-number">102</span>);
-row2.add(<span class="hljs-string">&quot;Kylin&quot;</span>);
-row2.add(<span class="hljs-number">30</span>);
-rows.add(row1);
-rows.add(row2);
-TupleBatch tuples = <span class="hljs-keyword">new</span> TupleBatch(<span class="hljs-number">0</span>, rows);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">List&lt;List&lt;?&gt;&gt; tuples = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();
+tuples.add(Arrays.asList(<span class="hljs-number">101</span>, <span class="hljs-string">&quot;John&quot;</span>, <span class="hljs-number">38</span>));
+tuples.add(Arrays.asList(<span class="hljs-number">102</span>, <span class="hljs-string">&quot;Mary&quot;</span>, <span class="hljs-number">30</span>));
+TupleBatch batch = <span class="hljs-keyword">new</span> TupleBatch(<span class="hljs-number">9</span>, tuples);
+batch.setTerminationFlag(<span class="hljs-keyword">true</span>);</code></pre>
 </div>
 </div>
 </div>

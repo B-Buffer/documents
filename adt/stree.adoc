@@ -1,4 +1,24 @@
 
 = STree
 
-* A `STree` is a self balancing search tree, has similar performance similar to a B+/-Tree.
+image:img/stree.png[ADT - STree]
+
+* A `STree` is a self balancing search tree, has similar performance similar to a B+ Tree, but with fewer updates. 
+* A `STree` has a keyManager, a leafManager and a lobManager,
+
+.*Key flags of STree*
+|===
+|Name |Discription
+
+|rowCount
+|How many rows existed in a `STree`
+
+|pageSize
+|How many pages existed in a `STree`
+
+|leafSize
+|How many leafs be allowed in a tree node
+
+|keyLength
+|
+|===

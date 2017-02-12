@@ -16,9 +16,7 @@ List<?> tuple
 == Examples
 
 [source,java]
+.*Tuple, 3 elements with different type*
 ----
-List tuple = new ArrayList();
-tuple.add(new Integer(100));
-tuple.add(new String("tuple"));
-tuple.add(null);
+List<?> tuple = Arrays.asList(10, "tuple", null);
 ----

@@ -53,7 +53,7 @@
         data-chapter-title="Tuple"
         data-filepath="adt/tuple.adoc"
         data-basepath=".."
-        data-revision="Wed Feb 08 2017 20:12:13 GMT+0800 (CST)"
+        data-revision="Sun Feb 12 2017 22:13:40 GMT+0800 (CST)"
         data-innerlanguage="">
     
 
@@ -279,11 +279,9 @@
 <h2 id="_examples">Examples</h2>
 <div class="sectionbody">
 <div class="listingblock">
+<div class="title"><strong>Tuple, 3 elements with different type</strong></div>
 <div class="content">
-<pre class="highlight"><code class="language-java" data-lang="java">List tuple = <span class="hljs-keyword">new</span> ArrayList();
-tuple.add(<span class="hljs-keyword">new</span> Integer(<span class="hljs-number">100</span>));
-tuple.add(<span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;tuple&quot;</span>));
-tuple.add(<span class="hljs-keyword">null</span>);</code></pre>
+<pre class="highlight"><code class="language-java" data-lang="java">List&lt;?&gt; tuple = Arrays.asList(<span class="hljs-number">10</span>, <span class="hljs-string">&quot;tuple&quot;</span>, <span class="hljs-keyword">null</span>);</code></pre>
 </div>
 </div>
 </div>

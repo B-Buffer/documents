@@ -19,17 +19,11 @@ List<List<?>> tuples
 == Examples
 
 [source,java]
+.*TupleBatch; beginning row=9, number of rows=2, lastBatch=1*
 ----
-List rows = new ArrayList(3);
-List row1 = new ArrayList(3);
-List row2 = new ArrayList(3);
-row1.add(101);
-row1.add("John");
-row1.add(38);
-row2.add(102);
-row2.add("Kylin");
-row2.add(30);
-rows.add(row1);
-rows.add(row2);
-TupleBatch tuples = new TupleBatch(0, rows);
+List<List<?>> tuples = new ArrayList<>();
+tuples.add(Arrays.asList(101, "John", 38));
+tuples.add(Arrays.asList(102, "Mary", 30));
+TupleBatch batch = new TupleBatch(9, tuples);
+batch.setTerminationFlag(true);
 ----

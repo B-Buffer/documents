@@ -53,7 +53,7 @@
         data-chapter-title="STree"
         data-filepath="adt/stree.adoc"
         data-basepath=".."
-        data-revision="Sun Feb 12 2017 22:13:40 GMT+0800 (CST)"
+        data-revision="Wed Feb 15 2017 18:05:01 GMT+0800 (CST)"
         data-innerlanguage="">
     
 
@@ -248,16 +248,33 @@
                     <section class="normal" id="section-">
                     
                         <h1 id="stree">STree</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p><span class="image"><img src="img/stree.png" alt="ADT - STree"></span></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>A <code>STree</code> is a self balancing search tree, has similar performance similar to a B+ Tree, but with fewer updates.</p>
+<p>A <code>STree</code> is a <a href="https://en.wikipedia.org/wiki/Skip_list" target="_blank">Skip List</a> based self balancing search tree, has similar performance to a B+ Tree, but with fewer updates.</p>
 </li>
 <li>
-<p>A <code>STree</code> has a keyManager, a leafManager and a lobManager,</p>
+<p>All tuples be kept in Level 0 per page with a ascending order, the level ahead of Level 0 use to keep all indexs(subelements of a tuple).</p>
+</li>
+<li>
+<p>Each pages in a <code>STree</code> always linked with prev page and next page dually.</p>
+</li>
+<li>
+<p>The Page kept the index also has a children list point to pages in its ancestor list.</p>
+</li>
+<li>
+<p>A <code>STree</code> has a keyManager, a leafManager and a lobManager, keyManager used to form indexs and add it to Buffer, the leafManager used to form tuples in Level 0 to TupleBatch and add it to Buffer, the LobManager used to pruge the Blob/Clob/Object column to FileStore directly.</p>
+</li>
+<li>
+<p>A <code>STree</code> support Insert/Update/Select/Delete against tuple.</p>
+</li>
+<li>
+<p>A <code>STree</code> can create a TupleSource, which the tuples can be get iteratively.</p>
 </li>
 </ul>
 </div>
@@ -292,6 +309,38 @@
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example">Example</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">ElementSymbol id = <span class="hljs-keyword">new</span> ElementSymbol(<span class="hljs-string">&quot;id&quot;</span>, <span class="hljs-keyword">new</span> GroupSymbol(<span class="hljs-string">&quot;Users&quot;</span>), String.class);
+ElementSymbol name = <span class="hljs-keyword">new</span> ElementSymbol(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-keyword">new</span> GroupSymbol(<span class="hljs-string">&quot;Users&quot;</span>), String.class);
+ElementSymbol phone = <span class="hljs-keyword">new</span> ElementSymbol(<span class="hljs-string">&quot;phone&quot;</span>, <span class="hljs-keyword">new</span> GroupSymbol(<span class="hljs-string">&quot;Users&quot;</span>), String.class);
+ElementSymbol address = <span class="hljs-keyword">new</span> ElementSymbol(<span class="hljs-string">&quot;address&quot;</span>, <span class="hljs-keyword">new</span> GroupSymbol(<span class="hljs-string">&quot;Users&quot;</span>), String.class);
+ElementSymbol country = <span class="hljs-keyword">new</span> ElementSymbol(<span class="hljs-string">&quot;country&quot;</span>, <span class="hljs-keyword">new</span> GroupSymbol(<span class="hljs-string">&quot;Users&quot;</span>), String.class);
+
+List&lt;ElementSymbol&gt; elements = Arrays.asList(id, name, phone, address, country);
+BufferManager bm = BBuffer.Factory.builder().bufferDir(<span class="hljs-string">&quot;target/buffer&quot;</span>).build();
+
+STree tree = bm.createSTree(elements, <span class="hljs-string">&quot;Users&quot;</span>, <span class="hljs-number">2</span>);
+<span class="hljs-keyword">int</span> size = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">7</span>;
+<span class="hljs-keyword">int</span> logSize = tree.getExpectedHeight(size);
+<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span> ; i &lt;= size ; i ++) {
+    tree.insert(Arrays.asList(<span class="hljs-string">&quot;&quot;</span> + i, <span class="hljs-string">&quot;name-&quot;</span> + i, <span class="hljs-string">&quot;123456789&quot;</span>, <span class="hljs-string">&quot;Beijing&quot;</span>, <span class="hljs-string">&quot;CN&quot;</span>), InsertMode.NEW, logSize);
+}
+
+TupleSource source = tree.getTupleSource(<span class="hljs-keyword">false</span>);
+List&lt;?&gt; tuple = <span class="hljs-keyword">null</span>;
+<span class="hljs-keyword">while</span>((tuple = source.nextTuple()) != <span class="hljs-keyword">null</span>) {
+    ...
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
                     
                     </section>
                 
